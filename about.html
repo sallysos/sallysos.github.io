@@ -30,5 +30,18 @@
       <p>Let's Connect!</p>
     </div>
   </footer>
+
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    
+            const navLinks = document.querySelectorAll('header nav a');
+            const currentPage = window.location.pathname.split('/').pop();
+            navLinks.forEach(link => {
+                if(link.getAttribute('href') === currentPage) {
+                link.classList.add('active-nav');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
