@@ -19,14 +19,14 @@ body {
 
 /* HEADER */
 
-header {
+.navbar {
   position: fixed;
   top: 0;
   width: 100%;
   background-color: #fff;
   z-index: 1000;
 }
-header .container {
+.navbar .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,108 +55,88 @@ nav a.active-nav {
   text-decoration: underline; 
 }
 
-/* mobile menu open btn */
+
+/* Mobile Menu */
+/* inactive open & close btn */
 .menu-toggle {
   position: relative;
   width: 32px;
   height: 32px;
-}
-#hamburger {
-  display: none; /* visible only on mobile */
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-}
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 3px;
-  background-color: black;
-}
-
-.menu-icon.open-menu {
   display: flex;
+  align-items: center;
+}
+.open-menu {
+  display: none;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: 70%;
+  gap: 6px;
   cursor: pointer;
 }
-.menu-icon.open-menu span {
+.open-menu span {
   display: block;
   height: 3px;
   background: black;
 }
-.menu-icon.close-menu {
+.close-menu {
   display: none;       /* hidden by default */
-  font-size: 2rem;
+  position: absolute; 
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
   line-height: 1;
   cursor: pointer;
-  color: black;
+  z-index: 1002; 
 }
-.navbar.menu-open .open-menu {
-  display: none;
-}
-.navbar.menu-open .close-menu {
-  display: block;
-}
+
+/* overlay menu */
 .overlay {
   display: none; /* hidden by default */
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   position: fixed;
   top: 0;
   right: 0;
   background-color: white;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   z-index: 999;
 }
-
-.overlay.show {
-  display: flex;
-}
-
-.overlay-close {
-  display: none;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 2.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: black;
-  z-index: 1001; 
-}
-
 .overlay-links a {
   font-size: 1.5rem;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   display: block;
   text-decoration: none;
   color: black;
 }
 
-.navbar.menu-open .overlay-close {
-  display: block;
+/* when menu button pressed, show overlay */
+.overlay.show {
+  display: flex;
+  top: 3.76rem;
+  background-color: rgba(245, 245, 245, 1);
+  z-index: 1000; 
 }
 
 @media (max-width: 768px) {
   .nav-links {
     display: none; /* hide desktop nav */
   }
-  #hamburger {
+  .menu-toggle .open-menu {
     display: flex; /* show hamburger */
   }
   .overlay-links {
     align-items: center;
-    
     padding-left: 0;       /* remove that desktop padding */
   }
-
 }
+.navbar.menu-open .open-menu   { display: none; }
+.navbar.menu-open .close-menu  { display: flex; }
+
 
 /* INDEX */
 main {

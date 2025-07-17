@@ -27,10 +27,10 @@
           loadPartial('header.html', 'header-placeholder'),
           loadPartial('footer.html', 'footer-placeholder')
         ]).then(() => {
-
+          
           // highlight current nav link
           const current = window.location.pathname.split('/').pop() || 'index.html';
-          document.querySelectorAll('header nav a').forEach(link => {
+          document.querySelectorAll('.navbar nav a').forEach(link => {
             const linkHref = link.getAttribute('href');
             if (linkHref === current) {
               link.classList.add('active-nav');
@@ -39,31 +39,24 @@
             }
           });
           const navbar   = document.querySelector('.navbar');
-          const hamburger = document.getElementById('hamburger');
-          const closeBtn  = document.getElementById('closeBtn');
+          const openBtn = document.querySelector('.open-menu');
+          const closeBtn  = document.querySelector('.close-menu');
           const overlay   = document.getElementById('overlayNav');
-
+          console.log('closeBtn is', closeBtn);  // should be a <div> or <button>, not null
+          function openMenu() {
+            navbar.classList.add('menu-open');
+            overlay.classList.add('show');
+          }
           function closeMenu() {
             console.log('closeMenu fired');
             overlay.classList.remove('show');
             navbar.classList.remove('menu-open');
           }
-
-          if (hamburger && closeBtn && overlay) {
-            // open mobile menu
-            hamburger.addEventListener('click', () => {
-              navbar.classList.add('menu-open');
-              overlay.classList.add('show');
-            });
-
-            // close mobile menu
-            closeBtn.addEventListener('click', closeMenu);
-          
-            // Also close when any overlay link is clicked
-            overlay.querySelectorAll('a').forEach(link => {
-              link.addEventListener('click', closeMenu);
-            });
-          }
+          openBtn.addEventListener('click', openMenu);
+          closeBtn.addEventListener('click', closeMenu);
+          overlay.querySelectorAll('a').forEach(link =>
+            link.addEventListener('click', closeMenu)
+          );
         }).catch(err => {
           console.error('Error loading header or footer:', err);
         });
