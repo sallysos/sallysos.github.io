@@ -5,21 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles.css">
-  <title>Portfolio - SALLY SO</title>
+  <title>Work - Sally So</title>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">SALLY SO</div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">WORK</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main>
         <section class="intro">
@@ -141,41 +130,54 @@
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-        <p>Let's Connect!</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filters = document.querySelectorAll('.filters a');
-            const thumbnails = document.querySelectorAll('.thumbnail');
+    // load html file and inject to placeholder
+    function loadPartial(url, placeholderId) {
+      return fetch(url)
+        .then(res => res.text())
+        .then(html => { document.getElementById(placeholderId).innerHTML = html; });
+    }
 
-            filters.forEach(filter => {
-                filter.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    filters.forEach(f => f.classList.remove('active'));
-                    this.classList.add('active');
-                    const tag = this.dataset.tag;
-                    thumbnails.forEach(item => {
-                        const tags = item.dataset.tags.split(' ');
-                        if (tag === 'all' || tags.includes(tag)) {
-                            item.classList.remove('hidden');
-                        } else {
-                            item.classList.add('hidden');
-                        }   
-                    });
-                });
-            });
-            const navLinks = document.querySelectorAll('header nav a');
-            const currentPage = window.location.pathname.split('/').pop();
-            navLinks.forEach(link => {
-                if(link.getAttribute('href') === currentPage) {
-                link.classList.add('active-nav');
-                }
-            });
+    // load header & footer
+    Promise.all([
+      loadPartial('header.html', 'header-placeholder'),
+      loadPartial('footer.html', 'footer-placeholder')
+    ]).then(() => {
+
+      // highlight current nav link
+      const current = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('header nav a').forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === current) {
+          link.classList.add('active-nav');
+        } else {
+          link.classList.remove('active-nav'); 
+        }
+      });
+
+      const hamburger = document.getElementById('hamburger');
+      console.log(hamburger); // should not be null
+      const overlay = document.getElementById('overlayNav');
+      // Hamburger toggle for mobile
+      if (hamburger && overlay) {
+        // Toggle overlay on hamburger click
+        hamburger.addEventListener('click', () => {
+          console.log('Hamburger clicked');
+          overlay.classList.toggle('show');
         });
-    </script>
+
+        // Close overlay when nav link is clicked 
+        overlay.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            overlay.classList.remove('show');
+          });
+        });
+      }
+    }).catch(err => {
+    console.error('Error loading header or footer:', err);
+    });
+  </script>
 </body>
 </html>

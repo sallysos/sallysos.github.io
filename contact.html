@@ -1,48 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles.css">
-  <title>Contact - SALLY SO</title>
-</head>
-<body>
-  <header>
-    <div class="container">
-      <div class="logo">SALLY SO</div>
-      <nav>
-        <ul>
-          <li><a href="index.html">WORK</a></li>
-          <li><a href="about.html">ABOUT</a></li>
-          <li><a href="contact.html">CONTACT</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="/styles.css">
+      <title>Contact - Sally So</title>
+    </head>
+    <body>
+      <div id="header-placeholder"></div>
+      <main>
+        <!-- CONTACT section content goes here -->
+      </main>
+      <div id="footer-placeholder"></div>
 
-  <main>
-    <!-- CONTACT section content goes here -->
-  </main>
+      <script>
+        // load html file and inject to placeholder
+        function loadPartial(url, placeholderId) {
+          return fetch(url)
+            .then(res => res.text())
+            .then(html => { document.getElementById(placeholderId).innerHTML = html; });
+        }
 
-  <footer>
-    <div class="container">
-      <p>Let's Connect!</p>
-    </div>
-  </footer>
+        // load header & footer
+        Promise.all([
+          loadPartial('header.html', 'header-placeholder'),
+          loadPartial('footer.html', 'footer-placeholder')
+        ]).then(() => {
 
-  <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    
-            const navLinks = document.querySelectorAll('header nav a');
-            const currentPage = window.location.pathname.split('/').pop();
-            navLinks.forEach(link => {
-                if(link.getAttribute('href') === currentPage) {
-                link.classList.add('active-nav');
-                }
+          // highlight current nav link
+          const current = window.location.pathname.split('/').pop() || 'index.html';
+          document.querySelectorAll('header nav a').forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === current) {
+              link.classList.add('active-nav');
+            } else {
+              link.classList.remove('active-nav'); 
+            }
+          });
+          const navbar   = document.querySelector('.navbar');
+          const hamburger = document.getElementById('hamburger');
+          const closeBtnToggle  = document.getElementById('closeBtnToggle');
+          const closeBtnOverlay  = document.getElementById('closeBtnOverlay');
+          const overlay   = document.getElementById('overlayNav');
+
+          function closeMenu() {
+            console.log('closeMenu fired');
+            overlay.classList.remove('show');
+            navbar.classList.remove('menu-open');
+          }
+
+          if (hamburger && closeBtnToggle && closeBtnOverlay && overlay) {
+            hamburger.addEventListener('click', () => {
+              navbar.classList.add('menu-open');
+              overlay.classList.add('show');
             });
+            closeBtnToggle.addEventListener('click', closeMenu);
+            closeBtnOverlay.addEventListener('click', closeMenu);
+            // Also close when any overlay link is clicked
+            overlay.querySelectorAll('a').forEach(link => {
+              link.addEventListener('click', closeMenu);
+            });
+          }
+        }).catch(err => {
+          console.error('Error loading header or footer:', err);
         });
-    </script>
-</body>
-</html>
+      </script>
+    </body>
+  </html>
 
