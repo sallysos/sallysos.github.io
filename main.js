@@ -1,0 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // load html file and inject to placeholder
+        function loadPartial(url, placeholderId) {
+          return fetch(url)
+            .then(res => res.text())
+            .then(html => { document.getElementById(placeholderId).innerHTML = html; });
+        }
+
+        // load header & footer
+        Promise.all([
+          loadPartial('header.html', 'header-placeholder'),
+          loadPartial('footer.html', 'footer-placeholder')
+        ]).then(() => {
+          
+          // highlight current nav link
+          const current = window.location.pathname.split('/').pop() || 'index.html';
+          document.querySelectorAll('.navbar nav a').forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === current) {
+              link.classList.add('active-nav');
+            } else {
+              link.classList.remove('active-nav'); 
+            }
+          });
+          const navbar   = document.querySelector('.navbar');
+          const openBtn = document.querySelector('.open-menu');
+          const closeBtn  = document.querySelector('.close-menu');
+          const overlay   = document.getElementById('overlayNav');
+          console.log('closeBtn is', closeBtn);  // should be a <div> or <button>, not null
+          function openMenu() {
+            navbar.classList.add('menu-open');
+            overlay.classList.add('show');
+          }
+          function closeMenu() {
+            console.log('closeMenu fired');
+            overlay.classList.remove('show');
+            navbar.classList.remove('menu-open');
+          }
+          openBtn.addEventListener('click', openMenu);
+          closeBtn.addEventListener('click', closeMenu);
+          overlay.querySelectorAll('a').forEach(link =>
+            link.addEventListener('click', closeMenu)
+          );
+        }).catch(err => {
+          console.error('Error loading header or footer:', err);
+        });
+});
