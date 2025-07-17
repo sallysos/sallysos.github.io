@@ -141,19 +141,39 @@ nav a.active-nav {
 /* INDEX */
 main {
   flex: 1;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 .intro {
-  padding: 70px 0 100px;
+  padding-top: 80px;
+  padding-bottom: 40px;
   text-align: left;
   background-color: white;
 }
 .intro h1 {
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 1.3;
   margin: 0;
 }
-
+/* filters */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filters a {
+  text-decoration: none;
+  color: #666;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.filters a:hover,
+.filters a.active {
+  background: #0041D9;
+  color: #fff;
+}
+/* project grid */
 .projects .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -181,6 +201,13 @@ main {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
+.thumbnail .image_link .title {
+  text-decoration: none;
+}
+.thumbnail .image-link:link,
+.thumbnail .image-link:visited {
+  text-decoration: none;
+}
 .thumbnail .thumb_image {
   position: relative;
   width: 100%;
@@ -196,14 +223,15 @@ main {
   object-fit: cover;
 }
 .thumbnail .title {
-  padding: 15px 20px 5px;
+  padding: 15px 20px 10px;
   font-size: 1.2rem;
   font-weight: 600;
+  color: #0041D9;
   text-decoration: none;
 }
 .thumbnail .tags {
     padding: 0 20px 15px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 .thumbnail .tags a {
     border-bottom: 0;
@@ -286,7 +314,7 @@ main {
 .bg-section .bg-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: blue;
+  background-color: #0041D9;
   z-index: 1;
 }
 .bg-section .marquee-container {
@@ -330,7 +358,46 @@ main {
   color: #0a0a14;
 }
 
-/* ABOUT */
+/* CONTACT */
+.contact-container {
+  display: flex;                
+  flex-direction: column;       /* stack title above icons */
+  justify-content: center;      /* vertical centering */
+  align-items: center;    
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+.contact-title {
+  text-align: center;
+  font-size: 3rem;
+  padding-bottom: 3rem;
+  color: white;
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+.contact-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+.contact-links a img {
+  margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  display: block;
+  transition: opacity 0.2s;
+}
+.contact-links a:hover {
+  opacity: 0.5;
+}
+
+/* FOOTER */
 footer {
   background-color: black;
   color: white;
@@ -357,3 +424,4 @@ footer {
 .footer-links a:hover img {
   opacity: 0.7;
 }
+
