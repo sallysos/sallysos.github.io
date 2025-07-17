@@ -40,8 +40,7 @@
           });
           const navbar   = document.querySelector('.navbar');
           const hamburger = document.getElementById('hamburger');
-          const closeBtnToggle  = document.getElementById('closeBtnToggle');
-          const closeBtnOverlay  = document.getElementById('closeBtnOverlay');
+          const closeBtn  = document.getElementById('closeBtn');
           const overlay   = document.getElementById('overlayNav');
 
           function closeMenu() {
@@ -50,13 +49,16 @@
             navbar.classList.remove('menu-open');
           }
 
-          if (hamburger && closeBtnToggle && closeBtnOverlay && overlay) {
+          if (hamburger && closeBtn && overlay) {
+            // open mobile menu
             hamburger.addEventListener('click', () => {
               navbar.classList.add('menu-open');
               overlay.classList.add('show');
             });
-            closeBtnToggle.addEventListener('click', closeMenu);
-            closeBtnOverlay.addEventListener('click', closeMenu);
+
+            // close mobile menu
+            closeBtn.addEventListener('click', closeMenu);
+          
             // Also close when any overlay link is clicked
             overlay.querySelectorAll('a').forEach(link => {
               link.addEventListener('click', closeMenu);
