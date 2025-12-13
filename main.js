@@ -65,3 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }).catch(err => console.error('Error loading header or footer:', err));
 });
+
+const isContactPage = window.location.pathname.includes('contact');
+const fab = document.querySelector('.floatingactionbuttoncontainer');
+
+if (isContactPage && fab) {
+  fab.style.display = 'none';
+}
